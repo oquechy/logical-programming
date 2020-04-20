@@ -1,12 +1,10 @@
-# lp
+# Logical Programming
 
-## HW 1
+## HW 1: Sat-Solver
+## HW 2: Unification
 
-## HW 2
-
-Доказать, что при существовании композиции подстановок Theta1 Theta2 для любого терма t 
-
-
-f(x f(y))   f(f(z) t)
+    stack run  # run SAT-solver app
+    stack ghci # interactive mode
+    stack test # tests
 
  
