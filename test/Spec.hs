@@ -1,5 +1,7 @@
 import SAT
 import Unification
+import qualified MiniKanren as MK
+import Lists
 
 import Data.List
 import Test.HUnit
@@ -53,6 +55,19 @@ t5 = Var "a"
 unit_unify_var_func :: Assertion
 unit_unify_var_func = unify [] t4 t5 @?= Just [("a", Func "f" [])]
 
+unit_kanren_appendo_nil :: Assertion
+unit_kanren_appendo_nil = MK.solve (appendo (Var "a") (Var "b") nil) 
+                            @?= [[("b",Func "nil" []),("a",Func "nil" [])]]
+
+unit_kanren_appendo_none :: Assertion
+unit_kanren_appendo_none = MK.solve (appendo (cons (Var "a") (Var "b")) (Var "c") nil) 
+                            @?= []
+
+unit_kanren_appendo_inf :: Assertion
+unit_kanren_appendo_inf = let sol = MK.solve (appendo (Var "x") (cons (Var "a") (Var "b")) (Var "c")) 
+                          in (length (take 100 sol) @?= 100) 
+                            >> (take 1 sol @?= [[("c",Func "cons" [Var "a",Var "b"]),("x",Func "nil" [])]])
+
 main :: IO Counts
 main = runTestTT $ TestList $ map TestCase [ unit_tseytin
                                            , unit_dpll_sat
@@ -61,6 +76,9 @@ main = runTestTT $ TestList $ map TestCase [ unit_tseytin
                                            , unit_can_unify
                                            , unit_cant_unify
                                            , unit_unify_var_func 
+                                           , unit_kanren_appendo_nil
+                                           , unit_kanren_appendo_none 
+                                           , unit_kanren_appendo_inf 
                                            ]
 
 

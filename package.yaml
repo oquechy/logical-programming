@@ -26,6 +26,14 @@ library:
   source-dirs: src
 
 executables:
+  kanren:
+    main:                Main.hs
+    source-dirs:         app/kanren
+    ghc-options:
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lp
   unify:
     main:                Main.hs
     source-dirs:         app/unify
