@@ -1,4 +1,5 @@
 import SAT
+import Unification
 
 import Data.List
 import Test.HUnit
@@ -35,11 +36,31 @@ allAssignments (n:ns) = [(n, b):rec | b <- [True, False], rec <- allAssignments 
 unit_solve :: Assertion
 unit_solve = let a = solve f in all (eval f) a @?= True 
 
+t1 = Func "f" [Func "g" [Var "a"           , Func "f" [Var "c"]], Var "b"]
+t2 = Func "f" [Func "g" [Func "f" [Var "d"], Var "a"           ], Var "a"]
+
+unit_can_unify :: Assertion
+unit_can_unify = unify [] t1 t2 @?= Just [("b",Func "f" [Var "d"]),("c",Var "d"),("a",Func "f" [Var "d"])]
+
+t3 = Func "f" [Func "g" [Func "g" [Var "d"], Var "a"           ], Var "a"]
+
+unit_cant_unify :: Assertion
+unit_cant_unify = unify [] t1 t3 @?= Nothing
+
+t4 = Func "f" []
+t5 = Var "a"
+
+unit_unify_var_func :: Assertion
+unit_unify_var_func = unify [] t4 t5 @?= Just [("a", Func "f" [])]
+
 main :: IO Counts
 main = runTestTT $ TestList $ map TestCase [ unit_tseytin
                                            , unit_dpll_sat
                                            , unit_dpll_unsat
                                            , unit_solve
+                                           , unit_can_unify
+                                           , unit_cant_unify
+                                           , unit_unify_var_func 
                                            ]
 
 

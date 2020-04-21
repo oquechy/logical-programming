@@ -26,9 +26,18 @@ library:
   source-dirs: src
 
 executables:
-  lp-exe:
+  unify:
     main:                Main.hs
-    source-dirs:         app
+    source-dirs:         app/unify
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lp
+  sat:
+    main:                Main.hs
+    source-dirs:         app/sat
     ghc-options:
     - -threaded
     - -rtsopts
