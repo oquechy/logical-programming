@@ -1,10 +1,11 @@
 # Logical Programming
 
 ## HW 1: Sat-Solver
-## HW 2: Unification
+    stack run sat # run SAT-solver app
+    stack test    # tests
 
-    stack run  # run SAT-solver app
-    stack ghci # interactive mode
-    stack test # tests
+## HW 2: Unification
+    stack run unify # run unification app
+    stack test      # tests
 
  
