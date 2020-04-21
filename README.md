@@ -8,4 +8,7 @@
     stack run unify # run unification app
     stack test      # tests
 
+## HW 4: MiniKanren
+    stack ghci # run interactively
+
  
