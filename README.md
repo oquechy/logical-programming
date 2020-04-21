@@ -1,6 +1,6 @@
 # Logical Programming
 
-## HW 1: Sat-Solver
+## HW 1: SAT-Solver
     stack run sat # run SAT-solver app
     stack test    # tests
 
