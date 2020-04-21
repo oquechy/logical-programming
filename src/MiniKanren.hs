@@ -5,10 +5,7 @@ module MiniKanren
     , (&&&)
     , (|||)
     , fresh
-    , isTrue
-    , solve
-    , solutions
-    , run) where
+    , solve) where
 
 import Data.List
 import Data.Maybe
@@ -44,3 +41,6 @@ interleave (x:xs) ys = x : interleave ys xs
 
 fresh :: (Term -> Goal) -> Goal
 fresh f (s, v) = f (Var $ 'v':show v) (s, v + 1)
+
+solve :: Goal -> [Subst]
+solve g = map fst $ g ([], 0)
