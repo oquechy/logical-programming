@@ -52,4 +52,7 @@ fresh :: (Term -> Goal) -> Goal
 fresh f (s, c, v) = f (Var $ 'v':show v) (s, c, v + 1)
 
 solve :: Goal -> [(Subst, ConstrStore)]
-solve g = map (\(s, c, _) -> (s, c)) $ g ([], [], 0)
+solve g = map (\(s, c, _) -> (s, c)) $ g ([], [], 0) 
+
+materialize :: [(Subst, ConstrStore)] -> Term -> [(Term, ConstrStore)]
+materialize sols t = map (\(s, c) -> (walk s t, c)) sols

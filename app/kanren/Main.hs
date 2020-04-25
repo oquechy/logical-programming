@@ -1,7 +1,7 @@
 module Main where
 
 import Control.Monad
-import MiniKanren
+import qualified MiniKanren as MK
 
 main :: IO ()
 main = return ()
