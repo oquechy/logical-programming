@@ -33,9 +33,9 @@ Specify main module to use (press enter to load none): 1 # load module kanren
 λ> sols = MK.solve (notAppendo (cons (Var "h") nil) (Var "t") (cons (Var "h") (Var "t'")))
 λ> materialize sols (cons (Var "h") nil)                          -- cons H nil -> cons V2 nil
 [(Func "cons" [Var "v2",Func "nil" []],[("t",Var "v3")])]         
-λ> materialize sols (Var "t")                                     -- T          -> T
+λ> materialize sols (Var "t")                                     -- T -> T
 [(Var "t",[("t",Var "v3")])]
-λ> materialize sols (cons (Var "h") (Var "t'"))                   -- cons H T'  -> cons V2 V3
+λ> materialize sols (cons (Var "h") (Var "t'"))                   -- cons H T' -> cons V2 V3
 [(Func "cons" [Var "v2",Var "v3"],[("t",Var "v3")])]
 
 ```
