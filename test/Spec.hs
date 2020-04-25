@@ -57,7 +57,7 @@ unit_unify_var_func = unify [] t4 t5 @?= Just [("a", Func "f" [])]
 
 unit_kanren_appendo_nil :: Assertion
 unit_kanren_appendo_nil = MK.solve (appendo (Var "a") (Var "b") nil) 
-                            @?= [[("b",Func "nil" []),("a",Func "nil" [])]]
+                            @?= [([("b",Func "nil" []),("a",Func "nil" [])], [])]
 
 unit_kanren_appendo_none :: Assertion
 unit_kanren_appendo_none = MK.solve (appendo (cons (Var "a") (Var "b")) (Var "c") nil) 
@@ -66,7 +66,20 @@ unit_kanren_appendo_none = MK.solve (appendo (cons (Var "a") (Var "b")) (Var "c"
 unit_kanren_appendo_inf :: Assertion
 unit_kanren_appendo_inf = let sol = MK.solve (appendo (Var "x") (cons (Var "a") (Var "b")) (Var "c")) 
                           in (length (take 100 sol) @?= 100) 
-                            >> (take 1 sol @?= [[("c",Func "cons" [Var "a",Var "b"]),("x",Func "nil" [])]])
+                            >> (take 1 sol @?= [([("c",Func "cons" [Var "a",Var "b"]),("x",Func "nil" [])], [])])
+
+unit_kanren_notAppendo_none :: Assertion
+unit_kanren_notAppendo_none = MK.solve (notAppendo (cons (Var "h") nil) (Var "t") (cons (Var "h") (Var "t")))
+                            @?= []
+
+unit_kanren_notAppendo_inf :: Assertion
+unit_kanren_notAppendo_inf = let sol = MK.solve (notAppendo (Var "v") nil (Var "u")) 
+                             in (length (take 100 sol) @?= 100) 
+                                >> (take 1 sol @?= [([("v",Func "nil" [])],[("u",Func "nil" [])])])
+
+unit_kanren_notAppendo_single :: Assertion
+unit_kanren_notAppendo_single = MK.solve (notAppendo (cons (Var "h") nil) (Var "t") (cons (Var "h") (Var "t'")))
+                            @?= [([("t'",Var "v3"),("v0",Var "v2"),("v1",Func "nil" []),("h",Var "v0")],[("t",Var "v3")])]
 
 main :: IO Counts
 main = runTestTT $ TestList $ map TestCase [ unit_tseytin
@@ -79,6 +92,9 @@ main = runTestTT $ TestList $ map TestCase [ unit_tseytin
                                            , unit_kanren_appendo_nil
                                            , unit_kanren_appendo_none 
                                            , unit_kanren_appendo_inf 
+                                           , unit_kanren_notAppendo_none
+                                           , unit_kanren_notAppendo_inf
+                                           , unit_kanren_notAppendo_single
                                            ]
 
 
