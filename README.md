@@ -8,7 +8,12 @@
     stack run unify # run unification app
     stack test      # tests
 
-## HW 4: MiniKanren
+## HW 4,5: MiniKanren with Disunificaton
     stack ghci # run interactively
+    Specify main module to use (press enter to load none): 1 # load module kanren
+    λ> MK.solve $ (Var "a") === (Var "b")
+    [([("a",Var "b")],[])]
+    
+
 
  
