@@ -15,6 +15,7 @@ $ stack test      # tests
 ## HW 4,5: MiniKanren with Disunificaton
 ```bash
 $ stack ghci                                             # run interactively
+...
 Specify main module to use (press enter to load none): 1 # load module kanren
 ```
 ```haskell 
